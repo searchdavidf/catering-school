@@ -1,69 +1,76 @@
-import Image from "next/image";
+// src/app/page.tsx
+
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="min-h-screen bg-gradient-to-br from-[#000B30] via-[#0A1640] to-[#000B30] flex items-center justify-center p-4">
+      <div className="max-w-2xl w-full">
+        {/* Brand Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-[#FFD000] mb-3 tracking-tight">Multi-Bot</h1>
+          <p className="text-lg text-gray-300">AI voice assistant for your businesses</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Project Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Link
+            href="/kanhas"
+            className="group block p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 hover:border-[#FFD000]/50 hover:bg-white/10 transition-all duration-200"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-[#FFD000]/20 flex items-center justify-center">
+                <span className="text-2xl">🍽️</span>
+              </div>
+              <h2 className="text-2xl font-semibold text-white group-hover:text-[#FFD000] transition-colors">
+                Kanhas Veg
+              </h2>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Restaurant ordering, inventory, and sales analytics
+            </p>
+          </Link>
+
+          <Link
+            href="/fixbnb"
+            className="group block p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 hover:border-teal-400/50 hover:bg-white/10 transition-all duration-200"
           >
-            Documentation
-          </a>
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-teal-400/20 flex items-center justify-center">
+                <span className="text-2xl">🏠</span>
+              </div>
+              <h2 className="text-2xl font-semibold text-white group-hover:text-teal-400 transition-colors">
+                Fix BnB
+              </h2>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Turnovers, cleaning coordination, guest-ready verification
+            </p>
+          </Link>
+
+          <Link
+            href="/catering/login"
+            className="group block p-8 bg-white/5 backdrop-blur-lg rounded-2xl border border-white/10 hover:border-orange-400/50 hover:bg-white/10 transition-all duration-200"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 rounded-xl bg-orange-400/20 flex items-center justify-center">
+                <span className="text-2xl">🍱</span>
+              </div>
+              <h2 className="text-2xl font-semibold text-white group-hover:text-orange-400 transition-colors">
+                Catering
+              </h2>
+            </div>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              School canteen ordering — staff, kitchen & manager workflow
+            </p>
+          </Link>
         </div>
-      </main>
-    </div>
-  );
+
+        {/* Footer */}
+        <p className="text-center text-gray-500 text-xs mt-12">
+          Tap a project to open its AI assistant
+        </p>
+      </div>
+    </main>
+  )
 }
