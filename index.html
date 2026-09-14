@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catering School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">Catering<span>School</span></div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <a href="staff.html" class="btn btn-sm btn-secondary">Staff</a>
+      <a href="kitchen.html" class="btn btn-sm btn-secondary">Kitchen</a>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Countdown -->
+    <div class="countdown">
+      <span>⏰</span>
+      <span class="countdown-label">Last order:</span>
+      <span class="countdown-time" id="lastOrderTime">10:00 AM</span>
+    </div>
+
+    <!-- Search -->
+    <div class="search-box">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" class="input" id="searchInput" placeholder="Search dishes...">
+    </div>
+
+    <!-- Category Pills -->
+    <div class="category-pills" id="categoryPills"></div>
+
+    <!-- Menu Grid -->
+    <div class="grid grid-3" id="menuGrid"></div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="empty-state-icon">🍽️</div>
+      <p>No dishes found</p>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div id="cartSidebar" style="position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-navy);border-left:1px solid var(--card-border);z-index:200;transition:right 0.3s;padding:20px;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <h2 style="color:var(--gold);">Your Cart</h2>
+      <button onclick="Cart.toggle()" style="background:none;border:none;color:var(--text-light);font-size:1.5rem;cursor:pointer;">✕</button>
+    </div>
+    <div id="cartItems"></div>
+    <div id="cartTotal" style="margin-top:20px;padding-top:20px;border-top:1px solid var(--card-border);"></div>
+    <button onclick="Cart.checkout()" class="btn btn-primary" style="width:100%;margin-top:16px;">Proceed to Checkout</button>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:300;align-items:center;justify-content:center;">
+    <div class="glass-card" style="max-width:450px;width:90%;max-height:90vh;overflow-y:auto;">
+      <h2 style="color:var(--gold);margin-bottom:8px;">Checkout</h2>
+      <p style="color:var(--text-muted);margin-bottom:20px;">Fill in your details to place the order</p>
+      <form id="checkoutForm" onsubmit="Cart.submitOrder(event)">
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">Name *</label>
+          <input type="text" class="input" id="customerName" required placeholder="Your full name">
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">Contact *</label>
+          <input type="text" class="input" id="customerContact" required placeholder="Phone number">
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">Department / ID *</label>
+          <input type="text" class="input" id="customerDept" required placeholder="e.g., IT, HR, Finance">
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button type="button" onclick="Cart.closeCheckout()" class="btn btn-secondary" style="flex:1;">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="flex:1;">Place Order</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Order Success Modal -->
+  <div id="orderSuccessModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:300;align-items:center;justify-content:center;">
+    <div class="glass-card" style="max-width:450px;width:90%;text-align:center;">
+      <div style="font-size:4rem;margin-bottom:16px;">✅</div>
+      <h2 style="color:var(--success);margin-bottom:8px;">Order Placed!</h2>
+      <p style="color:var(--text-muted);margin-bottom:8px;">Your order ID:</p>
+      <p id="orderSuccessId" style="font-family:'Fira Code',monospace;color:var(--gold);font-size:1.25rem;font-weight:700;margin-bottom:20px;"></p>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:20px;">Save this ID to track your order status</p>
+      <button onclick="Cart.closeOrderSuccess()" class="btn btn-primary" style="width:100%;">Done</button>
+    </div>
+  </div>
+
+  <!-- Order Status Lookup -->
+  <div style="position:fixed;bottom:20px;left:20px;z-index:50;">
+    <button onclick="OrderLookup.toggle()" class="btn btn-sm btn-secondary">🔍 Track Order</button>
+  </div>
+  <div id="orderLookup" style="display:none;position:fixed;bottom:70px;left:20px;z-index:50;">
+    <div class="glass-card" style="width:300px;">
+      <h3 style="color:var(--gold);margin-bottom:12px;">Track Your Order</h3>
+      <input type="text" class="input" id="orderLookupId" placeholder="Enter Order ID" style="margin-bottom:8px;">
+      <button onclick="OrderLookup.search()" class="btn btn-primary btn-sm" style="width:100%;">Search</button>
+      <div id="orderLookupResult" style="margin-top:12px;"></div>
+    </div>
+  </div>
+
+  <!-- Cart Toggle Button -->
+  <button onclick="Cart.toggle()" id="cartToggle" style="display:none;position:fixed;bottom:20px;right:20px;z-index:50;width:56px;height:56px;border-radius:50%;background:var(--gold);border:none;color:var(--bg-night-blue);font-size:1.5rem;cursor:pointer;box-shadow:0 4px 15px rgba(255,208,0,0.3);align-items:center;justify-content:center;">
+    🛒
+    <span id="cartCount" style="position:absolute;top:-4px;right:-4px;width:20px;height:20px;border-radius:50%;background:var(--danger);color:white;font-size:0.7rem;display:flex;align-items:center;justify-content:center;">0</span>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/landing.js"></script>
+  <script src="js/order-lookup.js"></script>
+</body>
+</html>

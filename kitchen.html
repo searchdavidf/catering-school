@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitchen Dashboard — Catering School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">Catering<span>School</span></div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <a href="index.html" class="btn btn-sm btn-secondary">Home</a>
+      <button onclick="Auth.signOut()" class="btn btn-sm btn-secondary">Logout</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1 style="margin:20px 0 8px;">Kitchen Dashboard</h1>
+    <p style="color:var(--text-muted);margin-bottom:20px;">Manage orders and menu items</p>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="KitchenDashboard.switchTab('orders')">Orders</button>
+      <button class="tab" onclick="KitchenDashboard.switchTab('menu')">Menu Management</button>
+    </div>
+
+    <!-- Orders View -->
+    <div id="ordersView">
+      <!-- Stats -->
+      <div class="grid grid-4" style="margin-bottom:20px;">
+        <div class="glass-card" style="text-align:center;">
+          <div style="font-size:2rem;font-weight:700;color:var(--info);" id="approvedCount">0</div>
+          <div style="color:var(--text-muted);font-size:0.85rem;">Approved</div>
+        </div>
+        <div class="glass-card" style="text-align:center;">
+          <div style="font-size:2rem;font-weight:700;color:var(--warning);" id="preparingCount">0</div>
+          <div style="color:var(--text-muted);font-size:0.85rem;">Preparing</div>
+        </div>
+        <div class="glass-card" style="text-align:center;">
+          <div style="font-size:2rem;font-weight:700;color:var(--success);" id="readyCount">0</div>
+          <div style="color:var(--text-muted);font-size:0.85rem;">Ready</div>
+        </div>
+        <div class="glass-card" style="text-align:center;">
+          <div style="font-size:2rem;font-weight:700;color:var(--success);" id="deliveredCount">0</div>
+          <div style="color:var(--text-muted);font-size:0.85rem;">Delivered</div>
+        </div>
+      </div>
+
+      <!-- Orders List -->
+      <div id="ordersList"></div>
+    </div>
+
+    <!-- Menu Management View -->
+    <div id="menuView" style="display:none;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <h2>Menu Items</h2>
+        <button onclick="KitchenDashboard.showAddMenuModal()" class="btn btn-primary">+ Add Item</button>
+      </div>
+      <div id="menuList"></div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Menu Modal -->
+  <div id="menuModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:300;align-items:center;justify-content:center;">
+    <div class="glass-card" style="max-width:450px;width:90%;max-height:90vh;overflow-y:auto;">
+      <h2 style="color:var(--gold);margin-bottom:20px;" id="menuModalTitle">Add Menu Item</h2>
+      <form id="menuForm" onsubmit="KitchenDashboard.saveMenuItem(event)">
+        <input type="hidden" id="menuItemId">
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">Name *</label>
+          <input type="text" class="input" id="menuItemName" required>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">Description</label>
+          <input type="text" class="input" id="menuItemDesc">
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">Price (AED) *</label>
+          <input type="number" class="input" id="menuItemPrice" step="0.01" required>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.85rem;color:var(--text-muted);margin-bottom:4px;">Category *</label>
+          <input type="text" class="input" id="menuItemCategory" required placeholder="e.g., Main Course, Breads">
+        </div>
+        <div style="margin-bottom:20px;">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+            <input type="checkbox" id="menuItemAvailable" checked>
+            <span>Available</span>
+          </label>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button type="button" onclick="KitchenDashboard.closeMenuModal()" class="btn btn-secondary" style="flex:1;">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="flex:1;">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/toast.js"></script>
+  <script src="js/kitchen.js"></script>
+</body>
+</html>
