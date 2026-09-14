@@ -102,18 +102,11 @@ CREATE POLICY "status_log_insert" ON order_status_log FOR INSERT WITH CHECK (
 
 -- Insert sample menu items
 INSERT INTO menu_items (name, description, price, category, sort_order) VALUES
-  ('Chicken Biryani', 'Aromatic basmati rice with tender chicken', 25.00, 'Main Course', 1),
-  ('Paneer Butter Masala', 'Creamy tomato curry with cottage cheese', 22.00, 'Main Course', 2),
-  ('Dal Makhani', 'Slow-cooked black lentils in buttery gravy', 18.00, 'Main Course', 3),
-  ('Veg Fried Rice', 'Stir-fried rice with mixed vegetables', 20.00, 'Main Course', 4),
-  ('Garlic Naan', 'Soft flatbread with garlic butter', 5.00, 'Breads', 1),
-  ('Tandoori Roti', 'Whole wheat clay oven bread', 3.00, 'Breads', 2),
-  ('Gulab Jamun', 'Sweet dumplings in sugar syrup', 8.00, 'Desserts', 1),
-  ('Masala Chai', 'Spiced Indian tea', 4.00, 'Beverages', 1),
-  ('Fresh Juice', 'Seasonal fresh fruit juice', 10.00, 'Beverages', 2),
-  ('Green Salad', 'Mixed greens with dressing', 12.00, 'Starters', 1),
-  ('Samosa (2 pcs)', 'Crispy pastry with spiced filling', 8.00, 'Starters', 2),
-  ('Papadum', 'Crispy lentil wafer', 3.00, 'Starters', 3);
+  ('Chowmein', 'Stir-fried noodles with vegetables', 15.00, 'Main Course', 1),
+  ('Pav Bhaji', 'Spiced mashed vegetables with buttered bread rolls', 15.00, 'Main Course', 2),
+  ('Samosa', 'Crispy pastry filled with spiced potatoes', 3.00, 'Starters', 1),
+  ('Fried Rice', 'Stir-fried rice with vegetables and soy sauce', 12.00, 'Main Course', 3),
+  ('Thali', 'Complete meal with dal, sabji, roti, rice, and pickle', 15.00, 'Main Course', 4);
 
 -- Insert sample staff/kitchen users (run after creating auth users in Supabase dashboard)
 -- INSERT INTO profiles (id, email, full_name, role) VALUES
